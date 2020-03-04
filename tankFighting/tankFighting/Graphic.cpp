@@ -1,12 +1,13 @@
 #include"Graphic.h"
 
-int Graphic::m_screen_width = SCREEN_WIDTH;
-int Graphic::m_screen_height = SCREEN_HEIGTH;
-
+rect Graphic::m_rectScreen;
+rect Graphic::m_rectBattleGround;
 
 void Graphic::Create()
 {
-	initgraph(m_screen_width, m_screen_height);
+	m_rectScreen.set(0, 0, SCREEN_WIDTH, SCREEN_HEIGTH);
+	initgraph(SCREEN_WIDTH,SCREEN_HEIGTH);
+	setbkcolor(DARKGRAY);
 }
 
 void Graphic::Destroy()
@@ -14,12 +15,24 @@ void Graphic::Destroy()
 	closegraph();
 }
 
+void Graphic::drawBattleGround()
+{
+
+	rectangle(m_rectBattleGround.getStartPoint().getX(), m_rectBattleGround.getStartPoint().getY(),
+		m_rectBattleGround.getEndPoint().getX(), m_rectBattleGround.getEndPoint().getY());
+}
+
 int Graphic::getScreenWidth()
 {
-	return m_screen_width;
+	return SCREEN_WIDTH;
 }
 
 int Graphic::getScreenHeight()
 {
-	return m_screen_height;
+	return SCREEN_HEIGTH;
+}
+
+rect Graphic::getBattleGround()
+{
+	return m_rectBattleGround;
 }

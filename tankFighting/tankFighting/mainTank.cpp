@@ -5,51 +5,63 @@ void mainTank::setDir(dir _dir)
 	myDir = _dir;
 }
 
-void mainTank::drawTankBody(int style)
+void mainTank::drawTankBody()
 {
-	fillrectangle(m_x - 4, m_y - 4, m_x + 4, m_y + 4);
+	fillrectangle(m_pos.getX() - 6, m_pos.getY() - 6, m_pos.getX() + 6, m_pos.getY() + 6);
 
-	if (style == 1)
+	switch (myDir)
 	{
-		fillrectangle(m_x - 8, m_y - 6, m_x - 6, m_y + 6);
-		fillrectangle(m_x + 6, m_y - 6, m_x + 8, m_y + 6);
-	}
-	else
-	{
-		fillrectangle(m_x - 6, m_y - 8, m_x + 6, m_y - 6);
-		fillrectangle(m_x - 6, m_y + 6, m_x + 6, m_y + 8);
+	case UP:
+	case DOWN:
+		fillrectangle
+		(m_rectSphere.getStartPoint().getX(), m_rectSphere.getStartPoint().getY(),	m_rectSphere.getStartPoint().getX() + 4, m_rectSphere.getEndPoint().getY());
+
+		fillrectangle
+		(m_rectSphere.getEndPoint().getX() - 4, m_rectSphere.getStartPoint().getY(),
+		  m_rectSphere.getEndPoint().getX(), m_rectSphere.getEndPoint().getY());
+		break;
+	case LEFT:
+	case RIGHT:
+		fillrectangle(m_rectSphere.getStartPoint().getX(), m_rectSphere.getStartPoint().getY(),
+			m_rectSphere.getEndPoint().getX(), m_rectSphere.getStartPoint().getY() + 4);
+
+		fillrectangle(m_rectSphere.getStartPoint().getX(), m_rectSphere.getEndPoint().getY() - 4,
+			m_rectSphere.getEndPoint().getX(), m_rectSphere.getEndPoint().getY());
+		break;
+	default:
+		break;
 	}
 }
 
 void mainTank::display()
 {
-	COLORREF colorSave = getfillcolor();
+	COLORREF fill_color_save = getfillcolor();
+	COLORREF color_save = getcolor();
 
 	setfillcolor(myColor);
+	setcolor(myColor);
 
-	switch(myDir)
+	drawTankBody();
+
+	switch (myDir)
 	{
 	case UP:
-		drawTankBody(1);
-		line(m_x, m_y, m_x, m_y - 10);
+		line(m_pos.getX(), m_pos.getY(), m_pos.getX(), m_pos.getY() - 15);
 		break;
 	case DOWN:
-		drawTankBody(1);
-		line(m_x, m_y, m_x, m_y + 10);
+		line(m_pos.getX(), m_pos.getY(), m_pos.getX(), m_pos.getY() + 15);
 		break;
 	case LEFT:
-		drawTankBody(0);
-		line(m_x, m_y, m_x - 10, m_y);
+		line(m_pos.getX(), m_pos.getY(), m_pos.getX() - 15, m_pos.getY());
 		break;
 	case RIGHT:
-		drawTankBody(0);
-		line(m_x, m_y, m_x + 10, m_y);
+		line(m_pos.getX(), m_pos.getY(), m_pos.getX() + 15, m_pos.getY());
 		break;
 	default:
 		break;
 	}
-
-	setfillcolor(colorSave);
+	setcolor(color_save);
+	setfillcolor(fill_color_save);
 }
 
 void mainTank::move()
@@ -57,24 +69,42 @@ void mainTank::move()
 	switch (myDir)
 	{
 	case UP:
-		m_y -= myStep;
-		if (m_y < 0)
-			m_y = Graphic::getScreenHeight() - 1;
+		m_pos.setY(m_pos.getY() - myStep);
+		if (m_pos.getY() < Graphic::getBattleGround().getStartPoint().getY())
+			m_pos.setY(Graphic::getBattleGround().getEndPoint().getY() - 1);
 		break;
 	case DOWN:
-		m_y += myStep;
-		if (m_y > Graphic::getScreenHeight())
-			m_y = 1;
+		m_pos.setY(m_pos.getY() + myStep);
+		if (m_pos.getY() > Graphic::getBattleGround().getEndPoint().getY())
+			m_pos.setY(Graphic::getBattleGround().getStartPoint().getY() + 1);
 		break;
 	case LEFT:
-		m_x -= myStep;
-		if (m_x < 0)
-			m_x = Graphic::getScreenWidth() - 1;
+		m_pos.setX(m_pos.getX() - myStep);
+		if (m_pos.getX() < Graphic::getBattleGround().getStartPoint().getX())
+			m_pos.setX(Graphic::getBattleGround().getEndPoint().getX() - 1);
 		break;
 	case RIGHT:
-		m_x += myStep;
-		if (m_x > Graphic::getScreenWidth())
-			m_x = 1;
+		m_pos.setX(m_pos.getX() + myStep);
+		if (m_pos.getX() > Graphic::getBattleGround().getEndPoint().getX())
+			m_pos.setX(Graphic::getBattleGround().getStartPoint().getX() + 1);
+		break;
+	default:
+		break;
+
+	}
+}
+
+void mainTank::calculateSphere()
+{
+	switch (myDir)
+	{
+	case UP:
+	case DOWN:
+		m_rectSphere.set(m_pos.getX() - 13, m_pos.getY() - 10, m_pos.getX() + 13, m_pos.getY() + 10);
+		break;
+	case LEFT:
+	case RIGHT:
+		m_rectSphere.set(m_pos.getX() - 10, m_pos.getY() - 13, m_pos.getX() + 10, m_pos.getY() + 13);
 		break;
 	default:
 		break;

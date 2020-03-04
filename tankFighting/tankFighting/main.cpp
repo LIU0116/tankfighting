@@ -67,6 +67,8 @@ int main()
 		{
 			cleardevice();
 
+			Graphic::drawBattleGround();
+
 			myMainTank.move();
 			myMainTank.display();
 		}

@@ -144,12 +144,16 @@
   <ItemGroup>
     <ClInclude Include="Graphic.h" />
     <ClInclude Include="mainTank.h" />
+    <ClInclude Include="point.h" />
+    <ClInclude Include="rect.h" />
     <ClInclude Include="tank.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Graphic.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="mainTank.cpp" />
+    <ClCompile Include="point.cpp" />
+    <ClCompile Include="rect.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

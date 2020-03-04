@@ -1,4 +1,6 @@
-﻿  mainTank.cpp
+﻿  rect.cpp
+  point.cpp
+  mainTank.cpp
   main.cpp
   Graphic.cpp
   正在生成代码...

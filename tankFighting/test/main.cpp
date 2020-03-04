@@ -1,53 +1,49 @@
+#include<string>
 #include<iostream>
 
-using namespace std;
-
-class CRectangle
+class myClass
 {
 private:
-	int w, h;
-	static int totalArea;
-	static int totalNumber;
+	char* str;
 public:
-	CRectangle(int w_, int h_);
-	~CRectangle();
+	myClass(char* str1 = "default string")
+	{
+		str = new char[strlen(str1) + 1];
+		strcpy(str, str1);
+		std::cout << "constructor called" << std::endl;
+	}
+	~myClass()
+	{
+		std::cout << "destrustor called" << std::endl;
+	}
 
-	static void printTotal();
+	void showChar()
+	{
+		std::cout << str << std::endl;
+	}
 
+	myClass& operator=(const myClass& ele)
+	{
+		delete[] str;
+		str = new char[strlen(ele.str) + 1];
+		strcpy(str, ele.str);
+		return *this;
+	}
 };
 
-CRectangle::CRectangle(int w_, int h_)
-{
-	w = w_;
-	h = h_;
-
-	totalNumber++;
-	totalArea += w*h;
-}
-
-CRectangle::~CRectangle()
-{
-	totalNumber--;
-	totalArea -= w*h;
-}
-
-void CRectangle::printTotal()
-{
-	cout << totalNumber << "," << totalArea << endl;
-}
-
-int CRectangle::totalNumber = 0;
-int CRectangle::totalArea = 0;
 
 int main()
 {
-	CRectangle r1(3, 3), r2(3, 4);
+	myClass class1("string1");
 
+	myClass class2;
+	class2.showChar();
 
+	class2 = class1;
 
-	CRectangle::printTotal();
-	r1.printTotal();
-
-	cin.get();
+	class1.showChar();
+	class2.showChar();
+	
+	std::cin.get();
 	return 0;
 }
