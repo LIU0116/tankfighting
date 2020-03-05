@@ -2,8 +2,8 @@
 #define _TANK_H_
 
 #include"Graphic.h"
-#include"point.h"
-#include"rect.h"
+//#include"point.h"
+//#include"rect.h"
 
 enum dir{UP, DOWN, LEFT,RIGHT};
 

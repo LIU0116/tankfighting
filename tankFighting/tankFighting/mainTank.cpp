@@ -14,7 +14,7 @@ void mainTank::drawTankBody()
 	case UP:
 	case DOWN:
 		fillrectangle
-		(m_rectSphere.getStartPoint().getX(), m_rectSphere.getStartPoint().getY(),	m_rectSphere.getStartPoint().getX() + 4, m_rectSphere.getEndPoint().getY());
+		(m_rectSphere.getStartPoint().getX(), m_rectSphere.getStartPoint().getY(),	m_rectSphere.getStartPoint().getX()+4, m_rectSphere.getEndPoint().getY());
 
 		fillrectangle
 		(m_rectSphere.getEndPoint().getX() - 4, m_rectSphere.getStartPoint().getY(),
@@ -92,6 +92,8 @@ void mainTank::move()
 		break;
 
 	}
+
+	calculateSphere();
 }
 
 void mainTank::calculateSphere()

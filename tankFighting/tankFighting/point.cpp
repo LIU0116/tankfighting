@@ -25,4 +25,3 @@ int point::getY()
 {
 	return m_y;
 }
-
